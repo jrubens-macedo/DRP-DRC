@@ -44,6 +44,7 @@ contagem_drc = 0
 contagem_ambos = 0
 contagem_p99 = 0
 contagem_p1 = 0
+contagem_p1_p99 = 0
 
 # Analisar e contar valores para cada coluna
 for coluna in df.columns:
@@ -54,6 +55,23 @@ for coluna in df.columns:
     perc_1_coluna = percentil_1[coluna]
     perc_99_coluna = percentil_99[coluna]
     contagem = {'n_criticos': 0, 'n_precarios': 0}
+
+# Contagem de violações de percentil
+    if media_coluna > 150:
+        if perc_99_coluna > limp99_220:
+            contagem_p99 += 1
+        if perc_1_coluna < limp1_220:
+            contagem_p1 += 1
+        if perc_99_coluna > limp99_220 and perc_1_coluna < limp1_220:
+            contagem_p1_p99 += 1
+    else:
+        if perc_99_coluna > limp99_127:
+            contagem_p99 += 1
+        if perc_1_coluna < limp1_127:
+            contagem_p1 += 1
+        if perc_99_coluna > limp99_127 and perc_1_coluna < limp1_127:
+            contagem_p1_p99 += 1
+# Fim da contagem de violações percentil
 
     for valor in df[coluna]:
         if media_coluna > 150:
@@ -93,12 +111,21 @@ percdrp = (contagem_drp / qtdemedicoes) * 100
 percdrc = (contagem_drc / qtdemedicoes) * 100
 percdrpdrc = (contagem_ambos / qtdemedicoes) * 100
 
+percp99 = (contagem_p99 / qtdemedicoes) * 100
+percp1 = (contagem_p1 / qtdemedicoes) * 100
+percp1p99 = (contagem_p1_p99 / qtdemedicoes) * 100
+
 # Exibir o resumo final
 print('----------------------------------------------------------------------------------------------------------')
 print(f' RESUMO FINAL')
 print('----------------------------------------------------------------------------------------------------------')
 print(f" Total de medições analisadas: {qtdemedicoes}")
+print('----------------------------------------------------------------------------------------------------------')
 print(f" Quantidade de medições que violaram apenas DRP: {contagem_drp} ({percdrp:.2f}%)")
 print(f" Quantidade de medições que violaram apenas DRC: {contagem_drc} ({percdrc:.2f}%)")
 print(f" Quantidade de medições que violaram DRP e DRC: {contagem_ambos} ({percdrpdrc:.2f}%)")
+print('----------------------------------------------------------------------------------------------------------')
+print(f" Quantidade de medições que violaram apenas P99%: {contagem_p99} ({percp99:.2f}%)")
+print(f" Quantidade de medições que violaram apenas P1%: {contagem_p1} ({percp1:.2f}%)")
+print(f" Quantidade de medições que violaram P99% e P1%: {contagem_p1_p99} ({percp1p99:.2f}%)")
 print('----------------------------------------------------------------------------------------------------------')
