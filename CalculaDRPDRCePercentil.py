@@ -47,6 +47,9 @@ qtdemedicoes = 0
 contagem_drp = 0
 contagem_drc = 0
 contagem_drp_drc = 0
+contagem_drp_zero = 0
+contagem_drc_zero = 0
+contagem_drpdrc_zero = 0
 contagem_p99 = 0
 contagem_p1 = 0
 contagem_p1_p99 = 0
@@ -105,6 +108,12 @@ for coluna in df.columns:
         contagem_drp += 1
     if drc > 100*limDRC:
         contagem_drc += 1
+    if drp == 0:
+        contagem_drp_zero += 1
+    if drc == 0:
+        contagem_drc_zero += 1
+    if drp == 0 and drc == 0:
+        contagem_drpdrc_zero += 1
 
 # Exibir os valores de DRP, DRC, percentil 1% e percentil 99% para cada coluna
 for coluna, indicadores in resultados.items():
@@ -124,23 +133,29 @@ totaldrpdrc = (contagem_drp + contagem_drc - contagem_drp_drc)
 totalp1p99 = (contagem_p1 + contagem_p99 - contagem_p1_p99)
 perctotaldrpdrc = (totaldrpdrc / qtdemedicoes) * 100
 perctotalp1p99 = (totalp1p99 / qtdemedicoes) * 100
+percdrpzero = (contagem_drp_zero / qtdemedicoes) * 100
+percdrczero = (contagem_drc_zero / qtdemedicoes) * 100
+percdrpdrczero = (contagem_drpdrc_zero / qtdemedicoes) * 100
 
 # Exibir o resumo final
-print('--------------------------------------------------------------------------')
+print('--------------------------------------------------------------------------------')
 print(f'\033[1m   R E S U M O    F I N A L\033[0m')
-print('--------------------------------------------------------------------------')
-print(f"   Total de medições analisadas: \033[95m{qtdemedicoes}\033[0m")
-print('--------------------------------------------------------------------------')
-print(f"   Quantidade total de violações de DRP e/ou DRC: \033[93m{totaldrpdrc}\033[0m ( \033[94m{perctotaldrpdrc:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram DRP: \033[93m{contagem_drp}\033[0m ( \033[94m{percdrp:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram DRC: \033[93m{contagem_drc}\033[0m ( \033[94m{percdrc:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram DRP e DRC: \033[93m{contagem_drp_drc}\033[0m ( \033[94m{percdrpdrc:.2f}%\033[0m )")
-print('--------------------------------------------------------------------------')
-print(f"   Quantidade total de violações de P1% e/ou P99%: \033[93m{totalp1p99}\033[0m ( \033[94m{perctotalp1p99:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram P99%: \033[93m{contagem_p99}\033[0m ( \033[94m{percp99:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram P1%: \033[93m{contagem_p1}\033[0m ( \033[94m{percp1:.2f}%\033[0m )")
-print(f"   Quantidade de medições que violaram P99% e P1%: \033[93m{contagem_p1_p99}\033[0m ( \033[94m{percp1p99:.2f}%\033[0m )")
-print('--------------------------------------------------------------------------')
+print('--------------------------------------------------------------------------------')
+print(f"   Total de medições analisadas ............................: \033[95m{qtdemedicoes}\033[0m")
+print('--------------------------------------------------------------------------------')
+print(f"   Quantidade total de violações de DRP e/ou DRC ...........: \033[93m{totaldrpdrc}\033[0m ( \033[94m{perctotaldrpdrc:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram DRP .................: \033[93m{contagem_drp}\033[0m ( \033[94m{percdrp:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram DRC .................: \033[93m{contagem_drc}\033[0m ( \033[94m{percdrc:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram DRP e DRC ...........: \033[93m{contagem_drp_drc}\033[0m ( \033[94m{percdrpdrc:.2f}%\033[0m )")
+print(f"   Quantidade de medições com DRP = 0 ......................: \033[93m{contagem_drp_zero}\033[0m ( \033[94m{percdrpzero:.2f}%\033[0m )")
+print(f"   Quantidade de medições com DRC = 0 ......................: \033[93m{contagem_drc_zero}\033[0m ( \033[94m{percdrczero:.2f}%\033[0m )")
+print(f"   Quantidade de medições com DRP e DRC = 0 ................: \033[93m{contagem_drpdrc_zero}\033[0m ( \033[94m{percdrpdrczero:.2f}%\033[0m )")
+print('--------------------------------------------------------------------------------')
+print(f"   Quantidade total de violações de P1% e/ou P99% ..........: \033[93m{totalp1p99}\033[0m ( \033[94m{perctotalp1p99:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram P99% ................: \033[93m{contagem_p99}\033[0m ( \033[94m{percp99:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram P1% .................: \033[93m{contagem_p1}\033[0m ( \033[94m{percp1:.2f}%\033[0m )")
+print(f"   Quantidade de medições que violaram P99% e P1% ..........: \033[93m{contagem_p1_p99}\033[0m ( \033[94m{percp1p99:.2f}%\033[0m )")
+print('--------------------------------------------------------------------------------')
 
 # Converter os resultados em um DataFrame para exportação
 df_resultados = pd.DataFrame.from_dict(resultados, orient='index')
