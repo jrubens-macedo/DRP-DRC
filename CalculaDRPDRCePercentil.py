@@ -141,3 +141,15 @@ print(f"   Quantidade de medições que violaram P99%: \033[93m{contagem_p99}\03
 print(f"   Quantidade de medições que violaram P1%: \033[93m{contagem_p1}\033[0m ( \033[94m{percp1:.2f}%\033[0m )")
 print(f"   Quantidade de medições que violaram P99% e P1%: \033[93m{contagem_p1_p99}\033[0m ( \033[94m{percp1p99:.2f}%\033[0m )")
 print('--------------------------------------------------------------------------')
+
+# Converter os resultados em um DataFrame para exportação
+df_resultados = pd.DataFrame.from_dict(resultados, orient='index')
+df_resultados.reset_index(inplace=True)
+df_resultados.rename(columns={'index': 'Coluna'}, inplace=True)
+
+# Salvando o DataFrame em arquivo Excel
+caminho_arquivo_saida = r'C:\pythonjr\drpdrc\resultados.xlsx'
+df_resultados.to_excel(caminho_arquivo_saida, index=False)
+
+print('Os resultados foram salvos com sucesso em arquivo Excel!')
+print('Localização:', caminho_arquivo_saida)
