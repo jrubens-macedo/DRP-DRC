@@ -4,6 +4,10 @@
 # 28/03/2024
 
 import pandas as pd
+import time
+
+# Capturando o tempo de início
+start_time = time.time()
 
 # Carregar o arquivo Excel
 arquivo_excel = r'C:\pythonjr\drpdrc\dados_volts_127_220.xlsx'
@@ -168,3 +172,9 @@ df_resultados.to_excel(caminho_arquivo_saida, index=False)
 
 print('Os resultados foram salvos com sucesso em arquivo Excel!')
 print('Localização:', caminho_arquivo_saida)
+
+# Capturando o tempo de término
+end_time = time.time()
+# Calculando o tempo de execução do código
+execution_time = end_time - start_time
+print(f"Tempo de execução do código: {execution_time:.2f} segundos")
