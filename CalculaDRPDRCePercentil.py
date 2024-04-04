@@ -10,8 +10,8 @@ import time
 start_time = time.time()
 
 # Carregar o arquivo Excel
-arquivo_excel = r'C:\pythonjr\drpdrc\dados_volts_127_220.xlsx'
-df = pd.read_excel(arquivo_excel)
+arquivo_csv = r'C:\pythonjr\DRP-DRC\dados_volts_127_220.csv'
+df = pd.read_csv(arquivo_csv)
 
 # Definição dos limites das faixas de tensão
 limite1_220 = 191
@@ -167,10 +167,10 @@ df_resultados.reset_index(inplace=True)
 df_resultados.rename(columns={'index': 'Coluna'}, inplace=True)
 
 # Salvando o DataFrame em arquivo Excel
-caminho_arquivo_saida = r'C:\pythonjr\drpdrc\resultados.xlsx'
-df_resultados.to_excel(caminho_arquivo_saida, index=False)
+caminho_arquivo_saida = r'C:\pythonjr\DRP-DRC\resultados.csv'
+df_resultados.to_csv(caminho_arquivo_saida, index=False)
 
-print('Os resultados foram salvos com sucesso em arquivo Excel!')
+print('Os resultados foram salvos com sucesso em arquivo CSV!')
 print('Localização:', caminho_arquivo_saida)
 
 # Capturando o tempo de término

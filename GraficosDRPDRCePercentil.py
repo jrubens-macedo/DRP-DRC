@@ -7,10 +7,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Carregar os arquivos Excel
-arquivo_excel_1 = r'C:\pythonjr\drpdrc\dados_volts_127_220.xlsx'
-arquivo_excel_2 = r'C:\pythonjr\drpdrc\resultados.xlsx'
-df1 = pd.read_excel(arquivo_excel_1)
-df2 = pd.read_excel(arquivo_excel_2)
+arquivo_csv_1 = r'C:\pythonjr\DRP-DRC\dados_volts_127_220.csv'
+arquivo_csv_2 = r'C:\pythonjr\DRP-DRC\resultados.csv'
+df1 = pd.read_csv(arquivo_csv_1)
+df2 = pd.read_csv(arquivo_csv_2)
 
 # Plotagem das tensões
 plt.figure(figsize=(10, 6))
